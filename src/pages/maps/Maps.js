@@ -8,17 +8,18 @@ import {
 
 // styles
 import useStyles from "./styles";
+import {Grid} from "@material-ui/core";
 
 const BasicMap = withScriptjs(
   withGoogleMap(() => (
     <GoogleMap
       defaultZoom={12}
       defaultCenter={{
-        lat: parseFloat(-37.813179),
-        lng: parseFloat(144.950259),
+        lat: parseFloat(37.6779627),
+        lng: parseFloat(127.0517842),
       }}
     >
-      <Marker position={{ lat: -37.813179, lng: 144.950259 }} />
+      <Marker position={{ lat: 37.6779627, lng: 127.0517842 }} />
     </GoogleMap>
   )),
 );

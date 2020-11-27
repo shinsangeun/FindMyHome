@@ -33,13 +33,15 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
+import NoticeOfSales from "../../data/NoticeOfSales"
+import RentalHouseSite from "../../data/RentalHouseSite"
 
 const mainChartData = getMainChartData();
 const PieChartData = [
-  { name: "Group A", value: 400, color: "primary" },
-  { name: "Group B", value: 300, color: "secondary" },
-  { name: "Group C", value: 300, color: "warning" },
-  { name: "Group D", value: 200, color: "success" },
+  { name: "서울", value: 400, color: "primary" },
+  { name: "경기", value: 300, color: "secondary" },
+  { name: "충북", value: 300, color: "warning" },
+  { name: "전남", value: 200, color: "success" },
 ];
 
 export default function Dashboard(props) {
@@ -61,7 +63,7 @@ export default function Dashboard(props) {
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
-            title="Visits Today"
+            title="전국 LH 주택"
             upperTitle
             bodyClass={classes.fullHeightBody}
             className={classes.card}
@@ -125,7 +127,7 @@ export default function Dashboard(props) {
         </Grid>
         <Grid item lg={3} md={8} sm={6} xs={12}>
           <Widget
-            title="App Performance"
+            title="LH 임대 주택 분포 지역 현황"
             upperTitle
             className={classes.card}
             bodyClass={classes.fullHeightBody}
@@ -138,7 +140,7 @@ export default function Dashboard(props) {
                   colorBrightness="secondary"
                   className={classes.legendElementText}
                 >
-                  Integration
+                  서울
                 </Typography>
               </div>
               <div className={classes.legendElement}>
@@ -148,7 +150,7 @@ export default function Dashboard(props) {
                   colorBrightness="secondary"
                   className={classes.legendElementText}
                 >
-                  SDK
+                  지방
                 </Typography>
               </div>
             </div>
@@ -159,7 +161,7 @@ export default function Dashboard(props) {
                 colorBrightness="secondary"
                 className={classes.progressSectionTitle}
               >
-                Integration
+                서울
               </Typography>
               <LinearProgress
                 variant="determinate"
@@ -175,7 +177,7 @@ export default function Dashboard(props) {
                 colorBrightness="secondary"
                 className={classes.progressSectionTitle}
               >
-                SDK
+                지방
               </Typography>
               <LinearProgress
                 variant="determinate"
@@ -268,7 +270,7 @@ export default function Dashboard(props) {
           </Widget>
         </Grid>
         <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Widget title="Revenue Breakdown" upperTitle className={classes.card}>
+          <Widget title="LH 분포 Top5" upperTitle className={classes.card}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <ResponsiveContainer width="100%" height={144}>
@@ -423,6 +425,8 @@ export default function Dashboard(props) {
           </Widget>
         </Grid>
       </Grid>
+      <NoticeOfSales/>
+      <RentalHouseSite/>
     </>
   );
 }
