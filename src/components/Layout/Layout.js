@@ -56,6 +56,7 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Dashboard} />
               <Route path="/app/typography" component={Typography} />
               <Route path="/app/tables" component={Tables} />
+              <Route path="/app/maps" component={Maps} />
               <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact

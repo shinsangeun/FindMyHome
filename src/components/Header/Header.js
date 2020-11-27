@@ -137,10 +137,7 @@ export default function Header(props) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-          </svg> LH집
+          <img className="/image/LHhome.png"/> LH집
         </Typography>
         <div className={classes.grow} />
 
