@@ -5,6 +5,7 @@ import axios from "axios";
 
 /*
 지역코드(CNP_CD)
+코드	설명
 11	서울특별시
 26	부산광역시
 27	대구광역시
@@ -22,40 +23,36 @@ import axios from "axios";
 47	경상북도
 48	경상남도
 50	제주특별자치도
+
+공급 유형코드(SPL_TP_CD)
+국민임대 07
+공공임대 08
+영구임대 09
+행복주택 10
+장기전세 11
+매입임대 13
+전세임대 17
 */
 
-/*
-공고유형코드(UPP_AIS_TP_CD)
-01	토지
-05	분양주택
-06	임대주택
-13	주거복지
-22	상가
-39	신혼희망타운
-*/
-
-
-class NoticeOfSales extends React.Component {
+class RentalHouseSite extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
-            dsSch: [],
-            dsList: [],
-            isLoading: true
+            data: ''
         };
     }
 
     componentDidMount = async () => {
-        await this.getNoticeOfSales();
+        await this.getRentalHouseSite();
     };
 
-    getNoticeOfSales = async () => {
-        const url = '/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo';
+    getRentalHouseSite = async () => {
+        const url = '/B552555/lhLeaseInfo/lhLeaseInfo';
         let queryParams = '?' + encodeURIComponent('serviceKey') + '=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D'; /* Service Key*/
-        queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');      /*한 페이지 결과 수 */
+        queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');      /* 한 페이지 결과 수 */
         queryParams += '&' + encodeURIComponent('PAGE') + '=' + encodeURIComponent('1');        /* 페이지 번호 */
         queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + encodeURIComponent('11');     /* 지역코드 */
-        queryParams += '&' + encodeURIComponent('SPL_TP_CD') + '=' + encodeURIComponent('07');  /* */
+        queryParams += '&' + encodeURIComponent('SPL_TP_CD') + '=' + encodeURIComponent('07');  /* 공급유형코드 */
 
         const options = {
             method: 'GET',
@@ -70,39 +67,24 @@ class NoticeOfSales extends React.Component {
 
         if(responseOK){
             let data = await response.json();
-            console.log("NoticeOfSales:", data);
-            let dsSchArray = [];
-            let dsListArray = [];
-
-            dsSchArray.push(data[0]);
-            // dsListArray.push(data[1]);
+            // console.log("data2:", data);
 
             this.setState({
-                dsSch: dsSchArray[0].dsSch,
-                // dsList: dsListArray,
-                isLoading: false
+                data: data
             });
         }
     }
 
     render() {
-        const {isLoading} = this.state;
-        console.log("isLoading:", isLoading)
-
-        if(!isLoading){
-            console.log("this:", this.state.dsSch);
-        }
-
         return (
             <div>
-                {this.state.dsSch}
+                뿅2.
             </div>
         );
     }
-
 }
 
-export default NoticeOfSales;
+export default RentalHouseSite;
 
 
 /*
