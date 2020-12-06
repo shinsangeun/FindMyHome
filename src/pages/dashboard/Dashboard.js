@@ -53,13 +53,13 @@ export default function Dashboard(props) {
 
   return (
     <>
-      <PageTitle title="Dashboard" button={<Button
+     {/* <PageTitle title="Dashboard" button={<Button
       variant="contained"
       size="medium"
       color="secondary"
     >
         Latest Reports
-    </Button>} />
+    </Button>} />*/}
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
@@ -106,19 +106,19 @@ export default function Dashboard(props) {
             >
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
-                  Registrations
+                  공고 중
                 </Typography>
-                <Typography size="md">860</Typography>
+                <Typography size="md"><NoticeOfSales/></Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
-                  Sign Out
+                  접수 중
                 </Typography>
                 <Typography size="md">32</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
-                  Rate
+                  접수 마감
                 </Typography>
                 <Typography size="md">3.25%</Typography>
               </Grid>
@@ -190,7 +190,7 @@ export default function Dashboard(props) {
         </Grid>
         <Grid item lg={3} md={8} sm={6} xs={12}>
           <Widget
-            title="Server Overview"
+            title="공고 유형"
             upperTitle
             className={classes.card}
             bodyClass={classes.fullHeightBody}
@@ -202,7 +202,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                60% / 37°С / 3.3 Ghz
+                분양 주택
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -226,7 +226,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                54% / 31°С / 3.3 Ghz
+                임대 주택
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -250,7 +250,7 @@ export default function Dashboard(props) {
                 className={classes.serverOverviewElementText}
                 noWrap
               >
-                57% / 21°С / 3.3 Ghz
+                신혼 희망 타운
               </Typography>
               <div className={classes.serverOverviewElementChartWrapper}>
                 <ResponsiveContainer height={50} width="99%">
@@ -416,7 +416,7 @@ export default function Dashboard(props) {
         ))}
         <Grid item xs={12}>
           <Widget
-            title="Support Requests"
+            title="LH 임대 주택 목록"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
@@ -425,7 +425,6 @@ export default function Dashboard(props) {
           </Widget>
         </Grid>
       </Grid>
-      <NoticeOfSales/>
       <RentalHouseSite/>
     </>
   );

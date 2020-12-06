@@ -27,7 +27,7 @@ export default {
   ],
   bigStat: [
     {
-      product: "Light Blue",
+      product: "국민임대",
       total: {
         monthly: 4232,
         weekly: 1465,
@@ -47,7 +47,7 @@ export default {
       }
     },
     {
-      product: "Sing App",
+      product: "공공임대",
       total: {
         monthly: 754,
         weekly: 180,
@@ -67,7 +67,7 @@ export default {
       }
     },
     {
-      product: "RNS",
+      product: "매입임대",
       total: {
         monthly: 1025,
         weekly: 301,
@@ -127,56 +127,53 @@ export default {
         '15 <span className="fw-semi-bold">Notifications</span> from Social Apps'
     }
   ],
+  // TODO api 테이블 데이터 추가
+
   table: [
     {
       id: 0,
-      name: "Mark Otto",
-      email: "ottoto@wxample.com",
-      product: "ON the Road",
+      area: "강원도 강릉시",
+      type: "국민임대",
+      name: "강릉 예성그린2차(국민)",
       price: "$25 224.2",
-      date: "11 May 2017",
-      city: "Otsego",
-      status: "Sent"
+      closeDate: "11 May 2017",
+      status: "Progress"
     },
     {
       id: 1,
-      name: "Jacob Thornton",
-      email: "thornton@wxample.com",
-      product: "HP Core i7",
+      area: "강원도 강릉시",
+      type: "국민임대",
+      name: "서울양원 S1블록 행복주택 입주자 모집",
       price: "$1 254.2",
-      date: "4 Jun 2017",
-      city: "Fivepointville",
-      status: "Sent"
+      closeDate: "4 Jun 2017",
+      status: "Progress"
     },
     {
       id: 2,
-      name: "Larry the Bird",
-      email: "bird@wxample.com",
-      product: "Air Pro",
+      area: "강원도 강릉시",
+      type: "국민임대",
+      name: "강릉 예성그린3차(국민)",
       price: "$1 570.0",
-      date: "27 Aug 2017",
-      city: "Leadville North",
-      status: "Pending"
+      closeDate: "27 Aug 2017",
+      status: "Receiving"
     },
     {
       id: 3,
-      name: "Joseph May",
-      email: "josephmay@wxample.com",
-      product: "Version Control",
+      area: "강원도 강릉시",
+      type: "국민임대",
+      name: "강릉 예성그린1차(국민)",
       price: "$5 224.5",
-      date: "19 Feb 2018",
-      city: "Seaforth",
-      status: "Declined"
+      closeDate: "19 Feb 2018",
+      status: "Progress"
     },
     {
       id: 4,
-      name: "Peter Horadnia",
-      email: "horadnia@wxample.com",
-      product: "Let's Dance",
+      area: "강원도 강릉시",
+      type: "국민임대",
+      name: "강릉 예성그린5차(국민)",
       price: "$43 594.7",
-      date: "1 Mar 2018",
-      city: "Hanoverton",
-      status: "Sent"
+      closeDate: "1 Mar 2018",
+      status: "Progress"
     }
   ]
 };

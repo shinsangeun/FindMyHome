@@ -1,5 +1,4 @@
-import React from "react";
-import axios from "axios";
+import React, {useState} from "react";
 
 /* 분양 임대 공고문 조회 서비스 */
 
@@ -49,13 +48,20 @@ class NoticeOfSales extends React.Component {
         await this.getNoticeOfSales();
     };
 
+   /* /B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=서울&UPP_AIS_TP_CD=06&CNP_CD=11&PAN_SS=공고중 */
     getNoticeOfSales = async () => {
-        const url = '/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo';
+        const url = '/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=서울&UPP_AIS_TP_CD=06&CNP_CD=11&PAN_SS=공고중';
         let queryParams = '?' + encodeURIComponent('serviceKey') + '=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D'; /* Service Key*/
-        queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');      /*한 페이지 결과 수 */
-        queryParams += '&' + encodeURIComponent('PAGE') + '=' + encodeURIComponent('1');        /* 페이지 번호 */
-        queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + encodeURIComponent('11');     /* 지역코드 */
-        queryParams += '&' + encodeURIComponent('SPL_TP_CD') + '=' + encodeURIComponent('07');  /* */
+        queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');            /*한 페이지 결과 수 */
+        queryParams += '&' + encodeURIComponent('PAGE') + '=' + encodeURIComponent('1');              /* 페이지 번호 */
+        queryParams += '&' + encodeURIComponent('PAN_NM') + '=' + encodeURIComponent('서울');          /* 지역명 */
+        queryParams += '&' + encodeURIComponent('UPP_AIS_TP_CD') + '=' + encodeURIComponent('06');    /* 공고 유형코드 */
+        queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + encodeURIComponent('11');           /* 지역코드 */
+        queryParams += '&' + encodeURIComponent('PAN_SS') + '=' + encodeURIComponent('공고중');           /* 공고 상태코드 */
+        queryParams += '&' + encodeURIComponent('PAN_ST_DT') + '=' + encodeURIComponent('20201002');           /* 공고 상태코드 */
+        queryParams += '&' + encodeURIComponent('PAN_ED_DT') + '=' + encodeURIComponent('20201202');           /* 공고 상태코드 */
+
+        console.log("query:", queryParams);
 
         const options = {
             method: 'GET',
@@ -65,21 +71,16 @@ class NoticeOfSales extends React.Component {
             }
         };
 
-        let response = await fetch(url + queryParams, options);
+        let response = await fetch(url, options);
         let responseOK = response && response.ok;
 
         if(responseOK){
             let data = await response.json();
             console.log("NoticeOfSales:", data);
-            let dsSchArray = [];
-            let dsListArray = [];
-
-            dsSchArray.push(data[0]);
-            // dsListArray.push(data[1]);
 
             this.setState({
-                dsSch: dsSchArray[0].dsSch,
-                // dsList: dsListArray,
+                dsSch: data[0],
+                dsList: data[1],
                 isLoading: false
             });
         }
@@ -87,23 +88,23 @@ class NoticeOfSales extends React.Component {
 
     render() {
         const {isLoading} = this.state;
-        console.log("isLoading:", isLoading)
+       // console.log("isLoading:", isLoading)
 
         if(!isLoading){
-            console.log("this:", this.state.dsSch);
+            console.log("this:", this.state.dsSch.dsSch[0]);
+            console.log("this2:", this.state.dsList.dsList[0]);
+            this.state.CNP_CD = this.state.dsSch.dsSch[0].CNP_CD;
+            this.state.PAN_ST_DT = this.state.dsSch.dsSch[0].PAN_ST_DT;
+            this.state.PAN_ED_DT = this.state.dsSch.dsSch[0].PAN_ED_DT;
         }
 
         return (
-            <div>
-                {this.state.dsSch}
-            </div>
+            <>{this.state.CNP_CD}</>
         );
     }
-
 }
 
 export default NoticeOfSales;
-
 
 /*
 export default function noticeOfSales() {
