@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 /* 분양 임대 공고문 조회 서비스 */
 
@@ -75,11 +74,10 @@ class RentalHouseSite extends React.Component {
         }
     }
 
+
     render() {
         return (
-            <div>
-                뿅2.
-            </div>
+          <>뿅2</>
         );
     }
 }

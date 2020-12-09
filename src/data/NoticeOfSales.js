@@ -98,15 +98,51 @@ class NoticeOfSales extends React.Component {
             this.state.PAN_ED_DT = this.state.dsSch.dsSch[0].PAN_ED_DT;
         }
 
+        let data = this.state.dsSch;
+        console.log("data:", data);
+
         return (
-            <>{this.state.CNP_CD}</>
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">area</th>
+                    <th scope="col">type</th>
+                    <th scope="col">name</th>
+                    <th scope="col">closeDate</th>
+                    <th scope="col">status</th>
+                </tr>
+                </thead>
+                {isLoading ? (
+                    <div className="loader">
+                        <span className="loader__text">Loading...</span>
+                    </div>
+                ) : (
+                    <tbody>
+                    {data.dsSch.map((index, matchId) => (
+                        <tr>
+                            <th scope="row" key={data.dsSch[matchId].CNP_CD_NM}>
+                                {data.dsSch[matchId].CNP_CD}
+                            </th>
+                            <th scope="row" key={data.dsSch[matchId].UPP_AIS_TP_CD}>
+                                {data.dsSch[matchId].CNP_CD}
+                            </th>
+                            <th scope="row" key={data.dsSch[matchId].PAN_NM}>
+                                {data.dsSch[matchId].CNP_CD}
+                            </th>
+                            <th scope="row" key={data.dsSch[matchId].PAN_ST_DT}>
+                                {data.dsSch[matchId].PAN_ST_DT}
+                            </th>
+                            <th scope="row" key={data.dsSch[matchId].PAN_SS}>
+                                {data.dsSch[matchId].PAN_ED_DT}
+                            </th>
+                        </tr>
+                    ))}
+                    </tbody>
+                )}
+            </table>
         );
     }
 }
 
 export default NoticeOfSales;
-
-/*
-export default function noticeOfSales() {
-
-}*/

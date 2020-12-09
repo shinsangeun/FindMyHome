@@ -108,7 +108,9 @@ export default function Dashboard(props) {
                 <Typography color="text" colorBrightness="secondary" noWrap>
                   공고 중
                 </Typography>
-                <Typography size="md"><NoticeOfSales/></Typography>
+                <Typography size="md">
+                  33
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography color="text" colorBrightness="secondary" noWrap>
@@ -424,6 +426,8 @@ export default function Dashboard(props) {
             <Table data={mock.table} />
           </Widget>
         </Grid>
+
+        <NoticeOfSales/>
       </Grid>
       <RentalHouseSite/>
     </>
