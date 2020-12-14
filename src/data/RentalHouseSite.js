@@ -1,36 +1,12 @@
 import React from "react";
+import AreaCode from "./AreaCode";
+import SupplyTypeCode from "./SupplyTypeCode";
 
 /* 분양 임대 공고문 조회 서비스 */
 
 /*
-지역코드(CNP_CD)
-코드	설명
-11	서울특별시
-26	부산광역시
-27	대구광역시
-28	인천광역시
-29	광주광역시
-30	대전광역시
-31	울산광역시
-36110	세종특별자치시
-41	경기도
-42	강원도
-43	충청북도
-44	충청남도
-45	전라북도
-46	전라남도
-47	경상북도
-48	경상남도
-50	제주특별자치도
-
-공급 유형코드(SPL_TP_CD)
-국민임대 07
-공공임대 08
-영구임대 09
-행복주택 10
-장기전세 11
-매입임대 13
-전세임대 17
+AreaCode: 지역코드(CNP_CD)
+SupplyTypeCode: 공급 유형코드(SPL_TP_CD)
 */
 
 class RentalHouseSite extends React.Component {
@@ -66,7 +42,7 @@ class RentalHouseSite extends React.Component {
 
         if(responseOK){
             let data = await response.json();
-            // console.log("data2:", data);
+            console.log("data2:", data);
 
             this.setState({
                 data: data

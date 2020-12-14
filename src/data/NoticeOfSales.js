@@ -7,8 +7,8 @@ import mock from "../pages/dashboard/mock";
 /* 분양 임대 공고문 조회 서비스 */
 
 /*
-CNP_CD : 지역코드(AreaCode),
-UPP_AIS_TP_CD: 공고유형코드(HouseCode),
+AreaCode: 지역코드(CNP_CD),
+HouseCode: 공고유형코드(UPP_AIS_TP_CD)
 */
 
 class NoticeOfSales extends React.Component {
