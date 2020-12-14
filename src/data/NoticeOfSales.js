@@ -1,38 +1,15 @@
 import React, {useState} from "react";
+import HouseCode from './HouseCode';
+import AreaCode from "./AreaCode";
+import mock from "../pages/dashboard/mock";
+// import Table from "../pages/dashboard/components/Table/Table";
 
 /* 분양 임대 공고문 조회 서비스 */
 
 /*
-지역코드(CNP_CD)
-11	서울특별시
-26	부산광역시
-27	대구광역시
-28	인천광역시
-29	광주광역시
-30	대전광역시
-31	울산광역시
-36110	세종특별자치시
-41	경기도
-42	강원도
-43	충청북도
-44	충청남도
-45	전라북도
-46	전라남도
-47	경상북도
-48	경상남도
-50	제주특별자치도
+CNP_CD : 지역코드(AreaCode),
+UPP_AIS_TP_CD: 공고유형코드(HouseCode),
 */
-
-/*
-공고유형코드(UPP_AIS_TP_CD)
-01	토지
-05	분양주택
-06	임대주택
-13	주거복지
-22	상가
-39	신혼희망타운
-*/
-
 
 class NoticeOfSales extends React.Component {
     constructor(props) {
@@ -50,18 +27,23 @@ class NoticeOfSales extends React.Component {
 
    /* /B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=서울&UPP_AIS_TP_CD=06&CNP_CD=11&PAN_SS=공고중 */
     getNoticeOfSales = async () => {
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = now.getMonth() + 1;
+        let day = now.getDate();
+
+        let startDate = year.toString() + (month-2).toString() + day.toString();
+        let endDate = year.toString() + month.toString() + day.toString();
+
         const url = '/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=서울&UPP_AIS_TP_CD=06&CNP_CD=11&PAN_SS=공고중';
         let queryParams = '?' + encodeURIComponent('serviceKey') + '=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D'; /* Service Key*/
         queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');            /*한 페이지 결과 수 */
         queryParams += '&' + encodeURIComponent('PAGE') + '=' + encodeURIComponent('1');              /* 페이지 번호 */
-        queryParams += '&' + encodeURIComponent('PAN_NM') + '=' + encodeURIComponent('서울');          /* 지역명 */
         queryParams += '&' + encodeURIComponent('UPP_AIS_TP_CD') + '=' + encodeURIComponent('06');    /* 공고 유형코드 */
         queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + encodeURIComponent('11');           /* 지역코드 */
         queryParams += '&' + encodeURIComponent('PAN_SS') + '=' + encodeURIComponent('공고중');           /* 공고 상태코드 */
-        queryParams += '&' + encodeURIComponent('PAN_ST_DT') + '=' + encodeURIComponent('20201002');           /* 공고 상태코드 */
-        queryParams += '&' + encodeURIComponent('PAN_ED_DT') + '=' + encodeURIComponent('20201202');           /* 공고 상태코드 */
-
-        console.log("query:", queryParams);
+        queryParams += '&' + encodeURIComponent('PAN_ST_DT') + '=' + encodeURIComponent(startDate);           /* 검색 날짜 */
+        queryParams += '&' + encodeURIComponent('PAN_ED_DT') + '=' + encodeURIComponent(endDate);
 
         const options = {
             method: 'GET',
@@ -88,14 +70,25 @@ class NoticeOfSales extends React.Component {
 
     render() {
         const {isLoading} = this.state;
-       // console.log("isLoading:", isLoading)
 
         if(!isLoading){
             console.log("this:", this.state.dsSch.dsSch[0]);
             console.log("this2:", this.state.dsList.dsList[0]);
-            this.state.CNP_CD = this.state.dsSch.dsSch[0].CNP_CD;
-            this.state.PAN_ST_DT = this.state.dsSch.dsSch[0].PAN_ST_DT;
-            this.state.PAN_ED_DT = this.state.dsSch.dsSch[0].PAN_ED_DT;
+
+            let houseCode = HouseCode.UPP_AIS_TP_CD.filter(x => {
+                return x.code === parseInt(this.state.dsSch.dsSch[0].UPP_AIS_TP_CD);
+            })
+
+            // 공고 주택 유형 코드 추가
+            // TODO 여러개 일 경우 for문 추가
+            this.state.dsSch.dsSch[0].HOUSE_TYPE = houseCode[0].type;
+
+            // 지역 코드 추가
+            let areaCode = AreaCode.CNP_CD.filter(x => {
+                return x.code = parseInt(this.state.dsSch.dsSch[0].CNP_CD);
+            })
+
+            this.state.dsSch.dsSch[0].AREA_NAME = areaCode[0].name;
         }
 
         let data = this.state.dsSch;
@@ -105,12 +98,10 @@ class NoticeOfSales extends React.Component {
             <table>
                 <thead>
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">area</th>
-                    <th scope="col">type</th>
-                    <th scope="col">name</th>
-                    <th scope="col">closeDate</th>
-                    <th scope="col">status</th>
+                    <th scope="col">지역</th>
+                    <th scope="col">유형</th>
+                    <th scope="col">공고 마감일</th>
+                    <th scope="col">공고 상태</th>
                 </tr>
                 </thead>
                 {isLoading ? (
@@ -121,20 +112,17 @@ class NoticeOfSales extends React.Component {
                     <tbody>
                     {data.dsSch.map((index, matchId) => (
                         <tr>
-                            <th scope="row" key={data.dsSch[matchId].CNP_CD_NM}>
-                                {data.dsSch[matchId].CNP_CD}
+                            <th scope="row" key={data.dsSch[matchId].AREA_NAME}>
+                                {data.dsSch[matchId].AREA_NAME} / {data.dsSch[matchId].PAN_NM}
                             </th>
-                            <th scope="row" key={data.dsSch[matchId].UPP_AIS_TP_CD}>
-                                {data.dsSch[matchId].CNP_CD}
+                            <th scope="row" key={data.dsSch[matchId].HOUSE_TYPE}>
+                                {data.dsSch[matchId].HOUSE_TYPE}
                             </th>
-                            <th scope="row" key={data.dsSch[matchId].PAN_NM}>
-                                {data.dsSch[matchId].CNP_CD}
-                            </th>
-                            <th scope="row" key={data.dsSch[matchId].PAN_ST_DT}>
-                                {data.dsSch[matchId].PAN_ST_DT}
+                            <th scope="row" key={data.dsSch[matchId].PAN_ED_DT}>
+                                {data.dsSch[matchId].PAN_ED_DT}
                             </th>
                             <th scope="row" key={data.dsSch[matchId].PAN_SS}>
-                                {data.dsSch[matchId].PAN_ED_DT}
+                                {data.dsSch[matchId].PAN_SS}
                             </th>
                         </tr>
                     ))}
