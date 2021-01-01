@@ -88,8 +88,6 @@ class RentalHouseSite extends React.Component {
         console.log("data2:", data2.dsList);
 
         return (
-         /* <>뿅2</>*/
-
             <table>
                 <thead>
                 <tr>
