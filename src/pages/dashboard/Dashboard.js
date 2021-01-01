@@ -33,8 +33,9 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
-import NoticeOfSales from "../../data/NoticeOfSales"
-import RentalHouseSite from "../../data/RentalHouseSite"
+import NoticeOfSales from "../../data/NoticeOfSales";
+import RentalHouseSite from "../../data/RentalHouseSite";
+import Tables2 from "./components/Table/Tables"
 
 const mainChartData = getMainChartData();
 const PieChartData = [
@@ -430,6 +431,8 @@ export default function Dashboard(props) {
         <NoticeOfSales/>
       </Grid>
       <RentalHouseSite/>
+
+      <Tables2/>
     </>
   );
 }

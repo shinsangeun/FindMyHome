@@ -142,8 +142,6 @@ class RentalHouseSite extends React.Component {
                             </th>
                         </tr>
                     ))}
-
-
                     </tbody>
                 )}
             </table>
@@ -156,5 +154,14 @@ export default RentalHouseSite;
 
 /*
 export default function noticeOfSales() {
-
+    table: [
+            {
+              dedicatedArea: 46.71,
+              area: "서울특별시 강남구",
+              complexName: "서울강남 3블록",
+              numHouseholds: 72,
+              totalNumHouseholds: 873,
+              allCount: 19
+            }
+       ]
 }*/
