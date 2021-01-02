@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
+import React, {useState} from "react";
+import {Grid, MenuItem, OutlinedInput, Select} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import MUIDataTable from "mui-datatables";
 
@@ -38,10 +38,46 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Tables() {
-  const classes = useStyles();
-  return (
+    const classes = useStyles();
+    let [location, setLocation] = useState("서울특별시");
+
+    console.log("location:", location);
+
+    return (
     <>
       <PageTitle title="Tables" />
+        지역 선택: <Select
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+            input={
+                <OutlinedInput
+                    classes={{
+                        notchedOutline: classes.mainChartSelectRoot,
+                        input: classes.mainChartSelect,
+                    }}
+                />
+            }
+            autoWidth
+        >
+            <MenuItem value="Seoul">서울특별시</MenuItem>
+            <MenuItem value="Incheon">인천광역시</MenuItem>
+            <MenuItem value="Gyeonggi">경기도</MenuItem>
+            <MenuItem value="Kangwondo">강원도</MenuItem>
+            <MenuItem value="Chungbuk">충청북도</MenuItem>
+            <MenuItem value="Chungnam">충청남도</MenuItem>
+            <MenuItem value="Jeonbuk">전라북도</MenuItem>
+            <MenuItem value="Jeonnam">전라남도</MenuItem>
+            <MenuItem value="Kyeongbuk">경상북도</MenuItem>
+            <MenuItem value="Kyeongnam">경상남도</MenuItem>
+            <MenuItem value="Busan">부산광역시</MenuItem>
+            <MenuItem value="Daegu">대구광역시</MenuItem>
+            <MenuItem value="Kwangju">광주광역시</MenuItem>
+            <MenuItem value="Daejeon">대전광역시</MenuItem>
+            <MenuItem value="Woolsan">울산광역시</MenuItem>
+            <MenuItem value="Sejong">세종특별자치시</MenuItem>
+            <MenuItem value="Jeju">제주특별자치도</MenuItem>
+        </Select>
+
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <MUIDataTable
