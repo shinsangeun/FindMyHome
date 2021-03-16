@@ -1,4 +1,6 @@
-## LHhome.
+## LHhome. 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FLHhome&count_bg=%23A193F1&title_bg=%23555555&icon=homeassistant.svg&icon_color=%23E7E7E7&title=visits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 - 프로젝트 명: LH집
 - 개요: Open API에 있는 LH 임대 주택 정보 데이터를 활용해서 웹페이지로 조회 할 수 있도록 만든 사이트 입니다.
 
