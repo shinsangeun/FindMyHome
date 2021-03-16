@@ -1,7 +1,9 @@
 import React from "react";
 import AreaCode from "./AreaCode";
 import SupplyTypeCode from "./SupplyTypeCode";
-import HouseCode from "./HouseCode";
+import PageTitle from "../components/PageTitle";
+import {Grid} from "@material-ui/core";
+import MUIDataTable from "mui-datatables";
 
 /* 분양 임대 공고문 조회 서비스 */
 
@@ -26,10 +28,12 @@ class RentalHouseSite extends React.Component {
 
     getRentalHouseSite = async () => {
         const url = '/B552555/lhLeaseInfo/lhLeaseInfo';
+        const areaCode = 11;    // 서울 특별시
+
         let queryParams = '?' + encodeURIComponent('serviceKey') + '=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D'; /* Service Key*/
         queryParams += '&' + encodeURIComponent('PG_SZ') + '=' + encodeURIComponent('10');      /* 한 페이지 결과 수 */
         queryParams += '&' + encodeURIComponent('PAGE') + '=' + encodeURIComponent('1');        /* 페이지 번호 */
-        queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + encodeURIComponent('11');     /* 지역코드 */
+        queryParams += '&' + encodeURIComponent('CNP_CD') + '=' + areaCode;     /* 지역코드 */
         queryParams += '&' + encodeURIComponent('SPL_TP_CD') + '=' + encodeURIComponent('07');  /* 공급유형코드 */
 
         const options = {
@@ -45,8 +49,6 @@ class RentalHouseSite extends React.Component {
 
         if(responseOK){
             let data = await response.json();
-            console.log("data2:", data);
-
             this.setState({
                 dsSch: data[0],
                 dsList: data[1],
@@ -58,12 +60,12 @@ class RentalHouseSite extends React.Component {
 
     render() {
         const {isLoading} = this.state;
+        const datatableData = [];
 
         if(!isLoading){
-            console.log("isLoading:", isLoading);
-
             console.log("SPL_TP_CD:", this.state.dsSch.dsSch[0].SPL_TP_CD);
             console.log("this2:", this.state.dsList.dsList[1]);
+
             let supplyTypeCode = SupplyTypeCode.SPL_TP_CD.filter(x => {
                 return x.code === parseInt(this.state.dsSch.dsSch[0].SPL_TP_CD);
             })
@@ -79,87 +81,35 @@ class RentalHouseSite extends React.Component {
 
             this.state.dsSch.dsSch[0].AREA_NAME = areaCode[0].name;
 
-            console.log("areaCode:", areaCode);
+            console.log("areaCode:", areaCode[0].name);     //서울 특별시
+
+            for(let i = 0; i<this.state.dsList.dsList.length; i++){
+                datatableData.push([
+                    this.state.dsList.dsList[i].DDO_AR,
+                    this.state.dsList.dsList[i].ARA_NM,
+                    this.state.dsList.dsList[i].SBD_LGO_NM,
+                    this.state.dsList.dsList[i].HSH_CNT,
+                    this.state.dsList.dsList[i].SUM_HSH_CNT,
+                    this.state.dsList.dsList[i].ALL_CNT
+                ])
+            }
         }
 
-        let data = this.state.dsSch;
-        let data2 = this.state.dsList;
-
-        console.log("data2:", data2.dsList);
-
         return (
-            <table>
-                <thead>
-                <tr>
-                    {/*<th scope="col">지역</th>
-                    <th scope="col">공급 유형</th>*/}
-                    <th scope="col">전용 면적</th>
-                    <th scope="col">지역명</th>
-                    <th scope="col">단지명</th>
-                    <th scope="col">세대수</th>
-                    <th scope="col">총 세대수</th>
-                    <th scope="col">전체 건수</th>
-                </tr>
-                </thead>
-                {isLoading ? (
-                    <div className="loader">
-                        <span className="loader__text">Loading...</span>
-                    </div>
-                ) : (
-                    <tbody>
-                    {/*{data.dsSch.map((index, matchId) => (
-                        <tr>
-                            <th scope="row" key={data.dsSch[matchId].AREA_NAME}>
-                                {data.dsSch[matchId].AREA_NAME}
-                            </th>
-                            <th scope="row" key={data.dsSch[matchId].SPL_TP_CD}>
-                                {data.dsSch[matchId].SPL_TP_CD}
-                            </th>
-                        </tr>
-                    ))}*/}
-
-                    {data2.dsList.map((index, matchId) => (
-                        <tr>
-                            <th scope="row" key={data2.dsList[matchId].DDO_AR}>
-                                {data2.dsList[matchId].DDO_AR}
-                            </th>
-                            <th scope="row" key={data2.dsList[matchId].ARA_NM}>
-                                {data2.dsList[matchId].ARA_NM}
-                            </th>
-                            <th scope="row" key={data2.dsList[matchId].SBD_LGO_NM}>
-                                {data2.dsList[matchId].SBD_LGO_NM}
-                            </th>
-                            <th scope="row" key={data2.dsList[matchId].HSH_CNT}>
-                                {data2.dsList[matchId].HSH_CNT}
-                            </th>
-                            <th scope="row" key={data2.dsList[matchId].SUM_HSH_CNT}>
-                                {data2.dsList[matchId].SUM_HSH_CNT}
-                            </th>
-                            <th scope="row" key={data2.dsList[matchId].ALL_CNT}>
-                                {data2.dsList[matchId].ALL_CNT}
-                            </th>
-                        </tr>
-                    ))}
-                    </tbody>
-                )}
-            </table>
+            <>
+                <PageTitle title="Tables" />
+                <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                        <MUIDataTable
+                            title="[임대 주택] 분양 임대 공고"
+                            data={datatableData}
+                            columns={["전용 면적", "지역명", "단지명", "세대수", "총 세대수", "전체 건수"]}
+                        />
+                    </Grid>
+                </Grid>
+            </>
         );
     }
 }
 
 export default RentalHouseSite;
-
-
-/*
-export default function noticeOfSales() {
-    table: [
-            {
-              dedicatedArea: 46.71,
-              area: "서울특별시 강남구",
-              complexName: "서울강남 3블록",
-              numHouseholds: 72,
-              totalNumHouseholds: 873,
-              allCount: 19
-            }
-       ]
-}*/

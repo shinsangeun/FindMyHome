@@ -35,7 +35,6 @@ import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
 import NoticeOfSales from "../../data/NoticeOfSales";
 import RentalHouseSite from "../../data/RentalHouseSite";
-import Tables2 from "./components/Table/Tables"
 
 const mainChartData = getMainChartData();
 const PieChartData = [
@@ -54,13 +53,14 @@ export default function Dashboard(props) {
 
   return (
     <>
-     {/* <PageTitle title="Dashboard" button={<Button
+      <PageTitle title="Dashboard" button={<Button
       variant="contained"
       size="medium"
       color="secondary"
     >
         Latest Reports
-    </Button>} />*/}
+    </Button>} />
+
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
@@ -430,9 +430,9 @@ export default function Dashboard(props) {
 
         <NoticeOfSales/>
       </Grid>
-      <RentalHouseSite/>
 
-      <Tables2/>
+      {/*분양 임대 공고 테이블*/}
+      <RentalHouseSite/>
     </>
   );
 }
