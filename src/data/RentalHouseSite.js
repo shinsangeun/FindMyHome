@@ -5,7 +5,11 @@ import PageTitle from "../components/PageTitle";
 import {Grid} from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
 
-/* 분양 임대 공고문 조회 서비스 */
+/*
+임대주택단지 조회 서비스.
+광역시도 코드, 공고유형 코드를 이용.
+임대주택 단지의 지역명, 공급유형, 단지명, 총 세대수, 전용면적, 세대수, 임대보증금, 월일대료, 최초 입주년월 정보 조회 기능
+*/
 
 /*
 AreaCode: 지역코드(CNP_CD)

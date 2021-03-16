@@ -31,10 +31,10 @@ import Widget from "../../components/Widget";
 import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
-import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
-import NoticeOfSales from "../../data/NoticeOfSales";
 import RentalHouseSite from "../../data/RentalHouseSite";
+import TotalCount from "../../pages/dashboard/components/Widget/TotalCount";
+import DailyLineChart from "./components/Widget/DailyLineChart";
 
 const mainChartData = getMainChartData();
 const PieChartData = [
@@ -62,72 +62,9 @@ export default function Dashboard(props) {
     </Button>} />
 
       <Grid container spacing={4}>
-        <Grid item lg={3} md={4} sm={6} xs={12}>
-          <Widget
-            title="전국 LH 주택"
-            upperTitle
-            bodyClass={classes.fullHeightBody}
-            className={classes.card}
-          >
-            <div className={classes.visitsNumberContainer}>
-              <Grid container item alignItems={"center"}>
-                <Grid item xs={6}>
-              <Typography size="xl" weight="medium" noWrap>
-                12, 678
-              </Typography>
-                </Grid>
-                <Grid item xs={6}>
-              <LineChart
-                width={100}
-                height={30}
-                data={[
-                  { value: 10 },
-                  { value: 15 },
-                  { value: 10 },
-                  { value: 17 },
-                  { value: 18 },
-                ]}
-              >
-                <Line
-                  type="natural"
-                  dataKey="value"
-                  stroke={theme.palette.success.main}
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-                </Grid>
-              </Grid>
-            </div>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
-              alignItems="center"
-            >
-              <Grid item xs={4}>
-                <Typography color="text" colorBrightness="secondary" noWrap>
-                  공고 중
-                </Typography>
-                <Typography size="md">
-                  33
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography color="text" colorBrightness="secondary" noWrap>
-                  접수 중
-                </Typography>
-                <Typography size="md">32</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography color="text" colorBrightness="secondary" noWrap>
-                  접수 마감
-                </Typography>
-                <Typography size="md">3.25%</Typography>
-              </Grid>
-            </Grid>
-          </Widget>
-        </Grid>
+       {/* 전국 LH 주택 위젯 */}
+        <TotalCount/>
+
         <Grid item lg={3} md={8} sm={6} xs={12}>
           <Widget
             title="LH 임대 주택 분포 지역 현황"
@@ -312,6 +249,9 @@ export default function Dashboard(props) {
             </Grid>
           </Widget>
         </Grid>
+
+       {/* <DailyLineChart/>*/}
+
         <Grid item xs={12}>
           <Widget
             bodyClass={classes.mainChartBody}
@@ -417,18 +357,6 @@ export default function Dashboard(props) {
             <BigStat {...stat} />
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Widget
-            title="LH 임대 주택 목록"
-            upperTitle
-            noBodyPadding
-            bodyClass={classes.tableWidget}
-          >
-            <Table data={mock.table} />
-          </Widget>
-        </Grid>
-
-        <NoticeOfSales/>
       </Grid>
 
       {/*분양 임대 공고 테이블*/}

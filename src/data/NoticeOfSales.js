@@ -2,9 +2,12 @@ import React, {useState} from "react";
 import HouseCode from './HouseCode';
 import AreaCode from "./AreaCode";
 import mock from "../pages/dashboard/mock";
-// import Table from "../pages/dashboard/components/Table/Table";
 
-/* 분양 임대 공고문 조회 서비스 */
+/*
+분양 임대 공고문 조회 서비스.
+광역시도 코드, 공고유형코드, 공고상태코드, 공고명으로 분양.임대공고문 이용.
+공고유형, 공고명, 지역, 공고게시일 정보를 조회하는 목록 조회 기능
+*/
 
 /*
 AreaCode: 지역코드(CNP_CD),
