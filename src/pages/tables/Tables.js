@@ -62,18 +62,18 @@ export default function Tables() {
             <MenuItem value="Seoul">서울특별시</MenuItem>
             <MenuItem value="Incheon">인천광역시</MenuItem>
             <MenuItem value="Gyeonggi">경기도</MenuItem>
-            <MenuItem value="Kangwondo">강원도</MenuItem>
+            <MenuItem value="Gangwondo">강원도</MenuItem>
             <MenuItem value="Chungbuk">충청북도</MenuItem>
             <MenuItem value="Chungnam">충청남도</MenuItem>
             <MenuItem value="Jeonbuk">전라북도</MenuItem>
             <MenuItem value="Jeonnam">전라남도</MenuItem>
-            <MenuItem value="Kyeongbuk">경상북도</MenuItem>
-            <MenuItem value="Kyeongnam">경상남도</MenuItem>
+            <MenuItem value="Gyeongbuk">경상북도</MenuItem>
+            <MenuItem value="Gyeongnam">경상남도</MenuItem>
             <MenuItem value="Busan">부산광역시</MenuItem>
             <MenuItem value="Daegu">대구광역시</MenuItem>
             <MenuItem value="Kwangju">광주광역시</MenuItem>
             <MenuItem value="Daejeon">대전광역시</MenuItem>
-            <MenuItem value="Woolsan">울산광역시</MenuItem>
+            <MenuItem value="Ulsan">울산광역시</MenuItem>
             <MenuItem value="Sejong">세종특별자치시</MenuItem>
             <MenuItem value="Jeju">제주특별자치도</MenuItem>
         </Select>
