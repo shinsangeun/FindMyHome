@@ -1,40 +1,37 @@
-import React from "react";
-import {
-  withGoogleMap,
-  withScriptjs,
-  GoogleMap,
-  Marker,
-} from "react-google-maps";
+/*global kakao*/
+import React, {Component} from "react";
+import styled from "styled-components";
 
-// styles
-import useStyles from "./styles";
-import {Grid} from "@material-ui/core";
+class Maps extends Component{
+    componentDidMount() {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src =
+            "https://dapi.kakao.com/v2/maps/sdk.js?appkey=59ea7df9de6ace242c9fd3138e4d9ad8&autoload=false"
+        document.head.appendChild(script);
 
-const BasicMap = withScriptjs(
-  withGoogleMap(() => (
-    <GoogleMap
-      defaultZoom={12}
-      defaultCenter={{
-        lat: parseFloat(37.6779627),
-        lng: parseFloat(127.0517842),
-      }}
-    >
-      <Marker position={{ lat: 37.6779627, lng: 127.0517842 }} />
-    </GoogleMap>
-  )),
-);
+        script.onload = () => {
+            kakao.maps.load(() => {
+                let container = document.getElementById("kakaoMap");
+                let options = {
+                    center: new kakao.maps.LatLng(37.6779627, 127.0517842),
+                    level: 12
+                }
+                const map = new window.kakao.maps.Map(container, options);
+            })
+        }
+    }
 
-export default function Maps() {
-  var classes = useStyles();
-
-  return (
-    <div className={classes.mapContainer}>
-      <BasicMap
-        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBiBfoToJrqSin7VDqnvJIFBnqGsNWGNr0"
-        loadingElement={<div style={{ height: "inherit", width: "inherit" }} />}
-        containerElement={<div style={{ height: "100%" }} />}
-        mapElement={<div style={{ height: "100%" }} />}
-      />
-    </div>
-  );
+    render() {
+        return (
+            <MapsContents id="kakaoMap"></MapsContents>
+        );
+    }
 }
+
+const MapsContents = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+export default Maps;
