@@ -46,7 +46,10 @@ export default function Tables() {
     return (
     <>
       <PageTitle title="Tables" />
+       {/* TODO defaultValue 값 추가 하기 */}
+
         지역 선택: <Select
+            defaultValue={location}
             value={location}
             onChange={e => setLocation(e.target.value)}
             input={
