@@ -12,7 +12,7 @@ class MapContent extends Component {
     }
 
     render() {
-        return <MapContents id="Mymap"></MapContents>;
+        return <MapContents id="Mymap"/>;
     }
 }
 
