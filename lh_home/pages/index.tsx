@@ -4,6 +4,7 @@ import Header from '../components/common/header/Header';
 import Footer from '../components/common/footer/Footer';
 import Tag from "../components/index/Tag";
 import Chart from "../components/index/Chart";
+import RentalHouseSite from "../components/data/RentalHouseSite";
 
 const Home: NextPage = () => {
     return (
@@ -13,9 +14,10 @@ const Home: NextPage = () => {
                 <p className={styles.description}>검색할 지역을 선택 하세요!</p>
                 <Tag/>
                 <Chart/>
+               {/* <RentalHouseSite/>*/}
             <Footer/>
         </div>
     )
 }
 
-export default Home
+export default Home;
