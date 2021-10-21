@@ -1,13 +1,13 @@
 /*global kakao*/
 import React, { Component } from "react";
+// @ts-ignore
 import styled from "styled-components";
 
-class MapContent extends Component {
+class MapContainer extends Component {
     componentDidMount() {
         const script = document.createElement("script");
         script.async = true;
-        script.src =
-            "https://dapi.kakao.com/v2/maps/sdk.js?appkey=59ea7df9de6ace242c9fd3138e4d9ad8&autoload=false";
+        script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=59ea7df9de6ace242c9fd3138e4d9ad8&autoload=false";
         document.head.appendChild(script);
     }
 
@@ -21,4 +21,4 @@ const MapContents = styled.div`
   height: 100%;
 `;
 
-export default MapContent;
+export default MapContainer;
