@@ -1,11 +1,18 @@
 import {useQuery} from "react-query";
-import React, {useState} from "react";
+import {useState} from "react";
 
 const list = () => {
     const [location, setLocation] = useState('서울');
 
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const startDate = year.toString() + (month-2).toString() + day.toString();
+    const endDate = year.toString() + month.toString() + day.toString();
+
     const {isLoading, error, data} = useQuery('repoData', () =>
-        fetch(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=${location}&UPP_AIS_TP_CD=06&PAN_NT_ST_DT=2021.01.23&CLSG_DT=2021.10.22`).then(res =>
+        fetch(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=${location}&UPP_AIS_TP_CD=06&PAN_NT_ST_DT=${startDate}&CLSG_DT=${endDate}`).then(res =>
             res.json()
         )
     )
@@ -17,16 +24,17 @@ const list = () => {
     if (error) return 'Error'
 
     const dsList = data[1].dsList;
+    console.log("dsList:", dsList);
 
     const handleChange = (obj: any) => {
         console.log("result:", obj.target.value);
         setLocation(obj.target.value);
     }
 
-
     return(
         <>
             <h2 style={{padding: "0px 20px"}}>임대 주택 공고 현황</h2>
+            <div style={{padding: "0px 20px"}}>* 최근 2달 데이터만 조회 합니다.</div>
 
             <select onChange={handleChange} style={{margin: "20px 20px"}}>
                 <option value="서울">서울특별시</option>
@@ -53,6 +61,7 @@ const list = () => {
                     <thead>
                         <th style={{border: '1px solid #222'}}>공고명</th>
                         <th style={{border: '1px solid #222'}}>지역명</th>
+                        <th style={{border: '1px solid #222'}}>주택 타입</th>
                         <th style={{border: '1px solid #222'}}>공고 게시일</th>
                         <th style={{border: '1px solid #222'}}>공고 마감일</th>
                         <th style={{border: '1px solid #222'}}>공고 상세 URL</th>
@@ -65,10 +74,17 @@ const list = () => {
                                 <tr>
                                     <td>{dsList[index].PAN_NM} </td>
                                     <td>{dsList[index].CNP_CD_NM}</td>
+                                    <td>{dsList[index].AIS_TP_CD_NM}</td>
                                     <td>{dsList[index].PAN_NT_ST_DT}</td>
                                     <td>{dsList[index].CLSG_DT}</td>
-                                   {/* <td>{dsList[index].DTL_URL}</td>*/}
-                                    <td>{dsList[index].PAN_SS}</td>
+                                    <td>
+                                        <button><a href={dsList[index].DTL_URL} target={"_blank"}>상세 보기</a></button>
+                                    </td>
+                                    <td>
+                                        {dsList[index].PAN_SS === "접수마감" ?
+                                        <div style={{background: "red", color: "white"}}>{dsList[index].PAN_SS}</div> :
+                                        <div style={{background: "green", color: "white"}}>{dsList[index].PAN_SS}</div>}
+                                    </td>
                                 </tr>
                             ))}
                         </> : <tr>데이터가 없습니다.</tr>
@@ -78,6 +94,6 @@ const list = () => {
             </div>
         </>
     )
-};
+}
 
 export default list;
