@@ -11,6 +11,7 @@ const list = () => {
     const startDate = year.toString() + (month-2).toString() + day.toString();
     const endDate = year.toString() + month.toString() + day.toString();
 
+    // PAN_SS=공고중: 추가해서 지역별 공고중 개수 그래프 만들기
     const {isLoading, error, data} = useQuery('repoData', () =>
         fetch(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=${location}&UPP_AIS_TP_CD=06&PAN_NT_ST_DT=${startDate}&CLSG_DT=${endDate}`).then(res =>
             res.json()
@@ -56,7 +57,7 @@ const list = () => {
                 <option value="제주">제주특별자치도</option>
             </select>
 
-            <div style={{padding: "0px 20px"}}>
+            <div style={{padding: "10px 20px"}}>
                 <table style={{border: '1px solid #222'}}>
                     <thead>
                         <th style={{border: '1px solid #222'}}>공고명</th>
@@ -72,15 +73,17 @@ const list = () => {
                         <>
                             {dsList.map((key: any, index: string | number) => (
                                 <tr>
-                                    <td>{dsList[index].PAN_NM} </td>
-                                    <td>{dsList[index].CNP_CD_NM}</td>
-                                    <td>{dsList[index].AIS_TP_CD_NM}</td>
-                                    <td>{dsList[index].PAN_NT_ST_DT}</td>
-                                    <td>{dsList[index].CLSG_DT}</td>
-                                    <td>
-                                        <button><a href={dsList[index].DTL_URL} target={"_blank"}>상세 보기</a></button>
+                                    <td style={{maxWidth: "280px", border: "1px solid #808080"}}>{dsList[index].PAN_NM} </td>
+                                    <td style={{border: "1px solid #808080"}}>{dsList[index].CNP_CD_NM}</td>
+                                    <td style={{border: "1px solid #808080"}}>{dsList[index].AIS_TP_CD_NM}</td>
+                                    <td style={{border: "1px solid #808080"}}>{dsList[index].PAN_NT_ST_DT}</td>
+                                    <td style={{border: "1px solid #808080"}}>{dsList[index].CLSG_DT}</td>
+                                    <td style={{border: "1px solid #808080"}}>
+                                        <button>
+                                            <a href={dsList[index].DTL_URL} target={"_blank"}>상세 보기</a>
+                                        </button>
                                     </td>
-                                    <td>
+                                    <td style={{border: "1px solid #808080"}}>
                                         {dsList[index].PAN_SS === "접수마감" ?
                                         <div style={{background: "red", color: "white"}}>{dsList[index].PAN_SS}</div> :
                                         <div style={{background: "green", color: "white"}}>{dsList[index].PAN_SS}</div>}
