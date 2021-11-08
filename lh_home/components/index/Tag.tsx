@@ -51,7 +51,7 @@ const Tag = () => {
         // }
     }
     return (
-        <Layout>
+        <Layout> 
             {tagData.length > 0 ?
                 <TagCloud
                     minSize={12}
