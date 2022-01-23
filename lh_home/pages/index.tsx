@@ -2,9 +2,12 @@ import type {NextPage} from 'next'
 import styles from '../styles/Home.module.css'
 import Tag from "../components/index/Tag";
 import Chart from "../components/index/Chart";
+import Menu from "../components/common/menu/Menu";
 
 const Home: NextPage = () => {
     return (
+        <>
+        <Menu/>
         <div className={styles.container}>
             <h1 className={styles.title}>LH 집🏠</h1>
             <p className={styles.description}>검색할 지역을 선택 하세요!</p>
@@ -12,6 +15,7 @@ const Home: NextPage = () => {
             <Chart/>
            {/* <RentalHouseSite/>*/}
         </div>
+        </>
     )
 }
 
