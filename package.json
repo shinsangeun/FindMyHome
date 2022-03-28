@@ -46,7 +46,7 @@
     "@babel/helper-call-delegate": "^7.11.4",
     "prettier": "^2.1.1"
   },
-  "proxy": "http://apis.data.go.kr",
+  "proxy": "https://apis.data.go.kr",
   "browserslist": {
     "production": [
       ">0.2%",

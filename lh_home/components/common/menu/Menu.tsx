@@ -15,7 +15,7 @@ const Menu = () => {
         <Layout>
             <List onClick={() => Router.push("/")}>홈</List>
             <List onClick={() => Router.push("/map")}>지도</List>
-            <List onClick={() => Router.push("/")}>목록</List>
+            <List onClick={() => Router.push("/list")}>목록</List>
         </Layout>
     )
 }

@@ -1,8 +1,10 @@
 import {useQuery} from "react-query";
 import {useState} from "react";
+import axios from 'axios';
 
 const list = () => {
     const [location, setLocation] = useState('서울');
+    const [dsList, setDsList] = useState(null);
 
     const now = new Date();
     const year = now.getFullYear();
@@ -12,20 +14,22 @@ const list = () => {
     const endDate = year.toString() + month.toString() + day.toString();
 
     // PAN_SS=공고중: 추가해서 지역별 공고중 개수 그래프 만들기
-    const {isLoading, error, data} = useQuery('repoData', () =>
-        fetch(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo/lhLeaseNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&PAN_NM=${location}&UPP_AIS_TP_CD=06&PAN_NT_ST_DT=${startDate}&CLSG_DT=${endDate}`).then(res =>
-            res.json()
-        )
+    const {isLoading, error, data} = useQuery('repoData', async () =>
+        await axios.get(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
+            .then(data => console.log("test==>", data.data[1].dsList))
     )
 
-    // http://apis.data.go.kr/B552555/lhNoticeInfo/getNoticeInfo?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&SCH_ST_DT=2021-01-01&SCH_ED_DT=2021-10-10&BBS_TL=%EA%B2%B0%EA%B3%BC&BBS_DTL_CTS=%ED%98%84%ED%99%A9&UPP_AIS_TP_CD=01&AIS_TP_CD=02&AIS_TP_CD_INT=36&AIS_TP_CD_INT2=26&AIS_TP_CD_INT3=17&PAGE=1
     console.log("data:", data);
 
     if (isLoading) return 'Loading...'
     if (error) return 'Error'
 
-    const dsList = data[1].dsList;
-    console.log("dsList:", dsList);
+    // @ts-ignore
+    if(!isLoading && data !== undefined && data.length > 0){
+        // @ts-ignore
+        setDsList(data.data[1].dsList);
+        console.log("dsList:", dsList);
+    }
 
     const handleChange = (obj: any) => {
         console.log("result:", obj.target.value);
@@ -69,9 +73,12 @@ const list = () => {
                         <th style={{border: '1px solid #222'}}>공고 상태</th>
                     </thead>
                     <tbody>
-                    {dsList.length > 0 ?
+                    {/*@ts-ignore*/}
+                    {data!== undefined && data.data[1].dsList.length > 0 ?
                         <>
-                            {dsList.map((key: any, index: string | number) => (
+                            {/*@ts-ignore*/}
+
+                            {data.data[1].dsList.map((key: any, index: string | number) => (
                                 <tr>
                                     <td style={{maxWidth: "280px", border: "1px solid #808080"}}>{dsList[index].PAN_NM} </td>
                                     <td style={{border: "1px solid #808080"}}>{dsList[index].CNP_CD_NM}</td>
