@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <div className={styles.container}>
             <h1 className={styles.title}>LH 집🏠</h1>
             <p className={styles.description}>검색할 지역을 선택 하세요!</p>
-            <Tag/>
+            {/*<Tag/>*/}
             <Chart/>
            {/* <RentalHouseSite/>*/}
         </div>

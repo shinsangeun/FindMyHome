@@ -4,32 +4,20 @@ import axios from 'axios';
 
 const list = () => {
     const [location, setLocation] = useState('서울');
-    const [dsList, setDsList] = useState(null);
+    const [dsList, setDsList] = useState([]);
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1;
-    const day = now.getDate();
-    const startDate = year.toString() + (month-2).toString() + day.toString();
-    const endDate = year.toString() + month.toString() + day.toString();
-
+    // 공고 유형 코드 (UPP_AIS_TP_CD) 06: 임대주택
     // PAN_SS=공고중: 추가해서 지역별 공고중 개수 그래프 만들기
     const {isLoading, error, data} = useQuery('repoData', async () =>
-        await axios.get(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
-            .then(data => console.log("test==>", data.data[1].dsList))
+        await axios.get(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo1/lhLeaseNoticeInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&UPP_AIS_TP_CD=06`)
+            .then(data => {setDsList(data.data[1].dsList)})
     )
 
     console.log("data:", data);
+    console.log("dsList==>", dsList);
 
     if (isLoading) return 'Loading...'
     if (error) return 'Error'
-
-    // @ts-ignore
-    if(!isLoading && data !== undefined && data.length > 0){
-        // @ts-ignore
-        setDsList(data.data[1].dsList);
-        console.log("dsList:", dsList);
-    }
 
     const handleChange = (obj: any) => {
         console.log("result:", obj.target.value);
@@ -73,27 +61,29 @@ const list = () => {
                         <th style={{border: '1px solid #222'}}>공고 상태</th>
                     </thead>
                     <tbody>
-                    {/*@ts-ignore*/}
-                    {data!== undefined && data.data[1].dsList.length > 0 ?
+                    {dsList !== null && dsList.length > 0 ?
                         <>
-                            {/*@ts-ignore*/}
-
-                            {data.data[1].dsList.map((key: any, index: string | number) => (
+                            {dsList.map((key: string, index: number) => (
                                 <tr>
+                                    {/*@ts-ignore*/}
                                     <td style={{maxWidth: "280px", border: "1px solid #808080"}}>{dsList[index].PAN_NM} </td>
+                                    {/*@ts-ignore*/}
                                     <td style={{border: "1px solid #808080"}}>{dsList[index].CNP_CD_NM}</td>
+                                    {/*@ts-ignore*/}
                                     <td style={{border: "1px solid #808080"}}>{dsList[index].AIS_TP_CD_NM}</td>
+                                    {/*@ts-ignore*/}
                                     <td style={{border: "1px solid #808080"}}>{dsList[index].PAN_NT_ST_DT}</td>
+                                    {/*@ts-ignore*/}
                                     <td style={{border: "1px solid #808080"}}>{dsList[index].CLSG_DT}</td>
                                     <td style={{border: "1px solid #808080"}}>
                                         <button>
+                                            {/*@ts-ignore*/}
                                             <a href={dsList[index].DTL_URL} target={"_blank"}>상세 보기</a>
                                         </button>
                                     </td>
                                     <td style={{border: "1px solid #808080"}}>
-                                        {dsList[index].PAN_SS === "접수마감" ?
-                                        <div style={{background: "red", color: "white"}}>{dsList[index].PAN_SS}</div> :
-                                        <div style={{background: "green", color: "white"}}>{dsList[index].PAN_SS}</div>}
+                                        {/*@ts-ignore*/}
+                                        {dsList[index].PAN_SS === "접수마감" ? <div style={{background: "red", color: "white"}}>{dsList[index].PAN_SS}</div> : <div style={{background: "green", color: "white"}}>{dsList[index].PAN_SS}</div>}
                                     </td>
                                 </tr>
                             ))}
