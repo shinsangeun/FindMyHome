@@ -1,6 +1,5 @@
 import { useLayoutEffect } from "react";
 import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 import * as am5 from "@amcharts/amcharts5";
@@ -8,12 +7,10 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 
 am4core.useTheme(am4themes_animated);
 
-function Chart() {
+const Chart = () => {
     useLayoutEffect(() => {
-       // let chart = am4core.create("chartdiv", am4charts.XYChart);
-
         let root = am5.Root.new("chartdiv");
-        var chart = root.container.children.push(
+        const chart = root.container.children.push(
             am5xy.XYChart.new(root, {
                 wheelY: "zoomX"
             })
@@ -121,7 +118,7 @@ function Chart() {
                 // @ts-ignore
                 chart.get("cursor").setAll({
                     positionX: 0.99,
-                    positionY: 0.1,
+                    positionY: 0.4,
                     xAxis: xAxis,
                     yAxis: yAxis,
                     alwaysShow: true
@@ -155,7 +152,6 @@ function Chart() {
         };
     }, []);
 
-    // @ts-ignore
     return(
         <div id={"chartdiv"} style={{width: "1000px", height: "500px"}}/>
     )

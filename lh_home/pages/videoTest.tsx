@@ -54,49 +54,38 @@ export default videoTest;*/
 
 
 import ReactPlayer from 'react-player/lazy';
-import React, {useEffect, useState} from "react";
+import {useState, useRef} from "react";
 
 type VideoPlayerProps = {
     title: string;
     vodPlaylistId: string;
 }
 
-const VideoPlayer = ({title, vodPlaylistId}: VideoPlayerProps) => {
+const VideoPlayer = ({}: VideoPlayerProps) => {
     const [playIndex, setPlayIndex] = useState(0);
+    const playerRef = useRef();
+
     const playList = [
         {index:1, url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'},
         {index:2, url: 'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8'},
         {index:3, url: 'http://playertest.longtailvideo.com/adaptive/wowzaid3/playlist.m3u8'}
     ];
 
-    const handleNextVideo = (video: string | any[], playIndex: number) => {
-        if(playIndex === video.length - 1){
-            setPlayIndex(0);
-        }else{
-            setPlayIndex(playIndex + 1);
-        }
-    }
-
-    const selectVideo = (index: number) => {
-        setPlayIndex(index);
-    }
-
     if(playList === null) return <p>Loading...</p>;
-
-    console.log("playList:", playList[playIndex].url)
 
     return (
         <>
             <h2>Player Test</h2>
             <ReactPlayer
                 // @ts-ignore
-                url={playList[playIndex].url}
+                ref={playerRef}
+                // @ts-ignore
+                url={playList[playIndex].url + "#t=72,100"}
                 playing
                 controls
                 muted
                 progressInterval={1000}
                 pip={true}
-                onEnded={() => {handleNextVideo(playList, playIndex)}}
                 width={'800px'}
                 height={'500px'}
             />

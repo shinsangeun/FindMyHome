@@ -6,7 +6,7 @@ const Chart = dynamic(
     { loading: () => <p>loading...</p>, ssr: false }
 );
 
-function chart() {
+const chart = () => {
     return <Chart />;
 }
 

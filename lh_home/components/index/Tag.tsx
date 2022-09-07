@@ -5,6 +5,7 @@ import Word from './data/Word';
 import styled from "styled-components";
 import {useQuery} from "react-query";
 import {useState, useEffect} from "react";
+import axios from 'axios';
 
 const Layout = styled.div`
     width: 1000px;height:300px;border-top: 1px solid #dcdcdc;padding: 10px;
@@ -17,44 +18,42 @@ const Tag = () => {
     useEffect(() => {
        // Word.map((data, index) => {
             handleData('경기');
-
        // })
     }, [])
 
-    const handleData = (location: string) => {
+    const handleData = async (location: string) => {
         console.log("location2:", location);
 
-        try{
-            fetch(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
-                .then(res =>  console.log("res", res.json()))
-        }catch (e){
-            console.log("e:",e);
-
-        }
+        await axios.get(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
     }
 
-    const {isLoading, error, data} = useQuery('repoData', () =>
-        fetch(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
-            .then(data => console.log("test==>", data))
+    const {isLoading, error, data} = useQuery('repoData', async () =>
+        await axios.get(`https://apis.data.go.kr/B552555/lhLeaseInfo1/lhLeaseInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&CNP_CD=11&SPL_TP_CD=07`)
     )
+
+    if(data!== undefined){
+        console.log("tag==>", data.data[1].dsList);
+    }
 
     if (isLoading) return 'Loading...';
     if (error) return 'Error';
 
-    return (
-        <Layout>
-            {tagData.length > 0 ?
-                <TagCloud
-                    minSize={12}
-                    maxSize={80}
-                   // @ts-ignore
-                    tags={tagData}
-                    onClick={(tag: { value: string; }) => alert(`'${tag.value}' was selected!`)}
-                />
-                :<></>
-            }
-        </Layout>
-    )
+    if(data!== undefined) {
+        return (
+            <Layout>
+                {data.data[1].dsList.length > 0 ?
+                    <TagCloud
+                        minSize={12}
+                        maxSize={80}
+                        // @ts-ignore
+                        tags={data.data[1].dsList}
+                        onClick={(tag: { value: string; }) => alert(`'${tag.value}' was selected!`)}
+                    />
+                    : <></>
+                }
+            </Layout>
+        )
+    }
 }
 
 export default Tag;
