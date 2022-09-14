@@ -1,21 +1,17 @@
 import {useQuery} from "react-query";
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import axios from 'axios';
 
 const list = () => {
     const [locationCode, setLocationCode] = useState<number>(11); // 서울
+    const SERVICE_KEY = 'vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D';
 
     // 공고 유형 코드 (UPP_AIS_TP_CD) 06: 임대주택
     // PAN_SS=공고중: 추가해서 지역별 공고중 개수 그래프 만들기
-    const {isLoading, error, data, refetch} = useQuery('repoData', async () =>
-        await axios.get(`http://apis.data.go.kr/B552555/lhLeaseNoticeInfo1/lhLeaseNoticeInfo1?serviceKey=vcu9zQh21aHdqeduiEp7Gr9QacLNM98A%2FWMExEIpgNQJwRyMSvNgP7ZJU3Ybpy75bM4nycmf%2FnP6IaLI2sXPUA%3D%3D&PG_SZ=10&PAGE=1&UPP_AIS_TP_CD=06&CNP_CD=${locationCode}`,
-            // @ts-ignore
-        {variables: locationCode})
+    // locationCode 값이 변할 때 마다 refetch
+    const {isLoading, error, data} = useQuery(['repoData', locationCode],() =>
+        axios.get(`https://apis.data.go.kr/B552555/lhLeaseNoticeInfo1/lhLeaseNoticeInfo1?serviceKey=${SERVICE_KEY}&PG_SZ=10&PAGE=1&UPP_AIS_TP_CD=06&CNP_CD=${locationCode}`)
     )
-
-    const onRefresh = useCallback(() => {
-        refetch().then(r => {})
-    }, [refetch]);
 
     if(data !== undefined){
         console.log("data:", data.data[1].dsList);
@@ -35,7 +31,7 @@ const list = () => {
                 <h2 style={{padding: "0px 20px"}}>임대 주택 공고 현황</h2>
                 <div style={{padding: "0px 20px"}}>* 최근 2달 데이터만 조회 합니다.</div>
 
-                <select onChange={handleChange} style={{margin: "20px 20px"}}>
+                <select onChange={handleChange} style={{margin: "20px 20px"}} value={locationCode}>
                     <option value="11">서울특별시</option>
                     <option value="28">인천광역시</option>
                     <option value="41">경기도</option>
@@ -93,8 +89,7 @@ const list = () => {
                                         </td>
                                     </tr>
                                 ))}
-                            </> : <tr>데이터가 없습니다.</tr>
-                        }
+                            </> : <tr>데이터가 없습니다.</tr>}
                         </tbody>
                     </table>
                 </div>
