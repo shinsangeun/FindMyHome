@@ -13,19 +13,14 @@ const list = () => {
         axios.get(`https://apis.data.go.kr/B552555/lhLeaseNoticeInfo1/lhLeaseNoticeInfo1?serviceKey=${SERVICE_KEY}&PG_SZ=10&PAGE=1&UPP_AIS_TP_CD=06&CNP_CD=${locationCode}`)
     )
 
-    if(data !== undefined){
-        console.log("data:", data.data[1].dsList);
-    }
-
-    if (isLoading) return 'Loading...'
-    if (error) return 'Error'
-
     const handleChange = (obj: any) => {
         console.log("result:", obj.target.value);
         setLocationCode(obj.target.value);
     }
 
-    if(data !== undefined) {
+    if(isLoading){
+        return 'loading'
+    }else{
         return (
             <>
                 <h2 style={{padding: "0px 20px"}}>임대 주택 공고 현황</h2>
@@ -54,18 +49,18 @@ const list = () => {
                 <div style={{padding: "10px 20px"}}>
                     <table style={{border: '1px solid #222'}}>
                         <thead>
-                        <th style={{border: '1px solid #222'}}>공고명</th>
-                        <th style={{border: '1px solid #222'}}>지역명</th>
-                        <th style={{border: '1px solid #222'}}>주택 타입</th>
-                        <th style={{border: '1px solid #222'}}>공고 게시일</th>
-                        <th style={{border: '1px solid #222'}}>공고 마감일</th>
-                        <th style={{border: '1px solid #222'}}>공고 상세 URL</th>
-                        <th style={{border: '1px solid #222'}}>공고 상태</th>
+                            <th style={{border: '1px solid #222'}}>공고명</th>
+                            <th style={{border: '1px solid #222'}}>지역명</th>
+                            <th style={{border: '1px solid #222'}}>주택 타입</th>
+                            <th style={{border: '1px solid #222'}}>공고 게시일</th>
+                            <th style={{border: '1px solid #222'}}>공고 마감일</th>
+                            <th style={{border: '1px solid #222'}}>공고 상세 URL</th>
+                            <th style={{border: '1px solid #222'}}>공고 상태</th>
                         </thead>
                         <tbody>
-                        {data.data[1].dsList !== null && data.data[1].dsList.length > 0 ?
+                        {data?.data[1].dsList !== undefined && data?.data[1].dsList.length > 0 ?
                             <>
-                                {data.data[1].dsList.map((key: string, index: number) => (
+                                {data?.data[1].dsList.map((key: string, index: number) => (
                                     <tr>
                                         {/*@ts-ignore*/}
                                         <td style={{maxWidth: "280px", border: "1px solid #808080"}}>{data.data[1].dsList[index].PAN_NM} </td>
